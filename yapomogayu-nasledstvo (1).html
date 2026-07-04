@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЯПомогаю.РФ — Наследство без стресса</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <script>
+    tailwind.config={theme:{extend:{colors:{coral:{50:'#FFF3EE',100:'#FFE4D9',200:'#FFC5B0',300:'#FFA588',400:'#F07A5A',500:'#E8734A',600:'#D4612F',700:'#B04E24'},mint:{50:'#EEFAF2',100:'#D4F0DD',200:'#A8E1BC',300:'#7CD29A',400:'#5B9A6F',500:'#3D8B6E',600:'#2D7056'},cream:{50:'#FFFCF8',100:'#FFF9F0',200:'#FFF3E0',300:'#FFE8C8'},ink:{900:'#2D2926',800:'#3D3835',700:'#5A5450',600:'#7A7468',500:'#9A9488',400:'#B8B2A8',300:'#D4CEC6'}},fontFamily:{serif:['Playfair Display','serif'],sans:['Inter','sans-serif']},fontSize:{'xs':['0.9rem',{lineHeight:'1.2rem'}],'sm':['1.05rem',{lineHeight:'1.5rem'}],'base':['1.2rem',{lineHeight:'1.8rem'}],'lg':['1.35rem',{lineHeight:'2.1rem'}],'xl':['1.5rem',{lineHeight:'2.1rem'}],'2xl':['1.8rem',{lineHeight:'2.4rem'}],'3xl':['2.25rem',{lineHeight:'2.7rem'}],'4xl':['2.7rem',{lineHeight:'3rem'}],'5xl':['3.6rem',{lineHeight:'1'}],'6xl':['4.5rem',{lineHeight:'1'}],'7xl':['5.4rem',{lineHeight:'1'}],'8xl':['7.2rem',{lineHeight:'1'}],'9xl':['9.6rem',{lineHeight:'1'}]}}}}
+    </script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter',sans-serif;background:#FFFBF5;color:#2D2926;overflow-x:hidden}
+        ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#FFF9F0}::-webkit-scrollbar-thumb{background:rgba(232,115,74,.25);border-radius:10px}::-webkit-scrollbar-thumb:hover{background:rgba(232,115,74,.5)}
+
+        .hero-fade{opacity:0;transform:translateY(24px);animation:heroUp .9s cubic-bezier(.16,1,.3,1) forwards}
+        @keyframes heroUp{to{opacity:1;transform:translateY(0)}}
+
+        .reveal{opacity:0;transform:translateY(36px);transition:all .9s cubic-bezier(.16,1,.3,1)}
+        .reveal.revealed{opacity:1;transform:translateY(0)}
+        .reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}.reveal-delay-4{transition-delay:.4s}
+
+        .soft-line{position:relative}
+        .soft-line::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(45,41,38,.07),transparent)}
+
+        .nav-link{position:relative}
+        .nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:#E8734A;border-radius:1px;transition:width .3s ease}
+        .nav-link:hover::after{width:100%}
+
+        .service-card{background:#fff;border:1px solid rgba(45,41,38,.06);transition:all .5s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;border-radius:20px}
+        .service-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#E8734A,#5B9A6F);opacity:0;transition:opacity .5s ease}
+        .service-card:hover{box-shadow:0 20px 60px -15px rgba(232,115,74,.12),0 4px 20px -5px rgba(45,41,38,.06);transform:translateY(-6px);border-color:rgba(232,115,74,.15)}
+        .service-card:hover::after{opacity:1}
+
+        .icon-badge{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+        .timeline-dot{width:48px;height:48px;border:1.5px solid rgba(232,115,74,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#FFFBF5;transition:all .5s ease;position:relative;z-index:2}
+        .timeline-dot.active{border-color:#E8734A;background:#FFF3EE;box-shadow:0 0 24px rgba(232,115,74,.15)}
+        .timeline-dot.active .dot-num{color:#E8734A}
+
+        .faq-item{border-bottom:1px solid rgba(45,41,38,.06)}
+        .faq-answer{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.16,1,.3,1)}
+        .faq-item.open .faq-answer{max-height:300px}
+        .faq-item.open .faq-icon{transform:rotate(45deg)}
+        .faq-icon{transition:transform .3s ease}
+
+        .glow-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;transition:transform .8s cubic-bezier(.25,.1,.25,1)}
+        .stat-number{font-variant-numeric:tabular-nums}
+
+        .btn-coral{background:linear-gradient(135deg,#E8734A,#F07A5A);color:#fff;font-weight:600;transition:all .3s ease;position:relative;overflow:hidden;box-shadow:0 4px 20px -4px rgba(232,115,74,.35)}
+        .btn-coral::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#D4612F,#E8734A);opacity:0;transition:opacity .3s ease}
+        .btn-coral:hover::before{opacity:1}
+        .btn-coral:hover{box-shadow:0 8px 30px -4px rgba(232,115,74,.45);transform:translateY(-1px)}
+        .btn-coral span{position:relative;z-index:1}
+
+        .btn-outline{border:1.5px solid rgba(232,115,74,.3);color:#E8734A;transition:all .3s ease;background:transparent}
+        .btn-outline:hover{border-color:#E8734A;background:rgba(232,115,74,.04)}
+
+        .img-placeholder{background:linear-gradient(135deg,#FFF9F0,#FFF3E0);border:1px solid rgba(45,41,38,.04);display:flex;align-items:center;justify-content:center;overflow:hidden}
+        .img-placeholder img{width:100%;height:100%;object-fit:cover;opacity:.8;transition:all .6s ease}
+        .img-placeholder:hover img{opacity:1;transform:scale(1.03)}
+
+        .review-card{background:#fff;border:1px solid rgba(45,41,38,.06);border-radius:20px;transition:all .5s cubic-bezier(.16,1,.3,1)}
+        .review-card:hover{box-shadow:0 16px 48px -12px rgba(45,41,38,.08);transform:translateY(-4px)}
+
+        .feature-row{border-bottom:1px solid rgba(45,41,38,.05);transition:all .3s ease;padding-left:0}
+        .feature-row:hover{padding-left:8px}
+
+        .problem-bar{height:4px;border-radius:4px;background:rgba(45,41,38,.06);overflow:hidden}
+        .problem-bar-fill{height:100%;border-radius:4px;transform-origin:left;transform:scaleX(0);transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+        .problem-bar-fill.animated{transform:scaleX(1)}
+
+        /* Hero tree cursor */
+        #heroSvg{cursor:default}
+        #heroSvg .node-hit{cursor:pointer}
+        #heroSvg .node-hit:hover~.node-core{filter:brightness(1.2)}
+
+        @media(max-width:768px){.hero-tree-wrap{opacity:.15!important}}
+        @media(max-width:1024px) and (min-width:769px){.hero-tree-wrap{opacity:.25!important}}
+        @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+    </style>
+</head>
+<body>
+
+<!-- SVG Sprite -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="icon-clock-urgency" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.3"/><path d="M12 7v5.5l3.5 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 3a9 9 0 019 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity=".35"/></symbol>
+    <symbol id="icon-conflict" viewBox="0 0 24 24" fill="none"><circle cx="7.5" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M2 20c0-3 2.5-5.5 5.5-5.5s5.5 2.5 5.5 5.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="16.5" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M11 20c0-3 2.5-5.5 5.5-5.5s5.5 2.5 5.5 5.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M10 12h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity=".5"/><path d="M11 10l2 2 2-2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity=".4"/><path d="M11 14l2-2 2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity=".4"/></symbol>
+    <symbol id="icon-error-doc" viewBox="0 0 24 24" fill="none"><path d="M5 3h10l4 4v13a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M15 3v4h4" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><line x1="8" y1="11" x2="14" y2="11" stroke="currentColor" stroke-width="1" opacity=".25" stroke-linecap="round"/><line x1="8" y1="14" x2="16" y2="14" stroke="currentColor" stroke-width="1" opacity=".25" stroke-linecap="round"/><circle cx="16" cy="17" r="3.5" stroke="currentColor" stroke-width="1.2"/><line x1="16" y1="15.5" x2="16" y2="18.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="16" cy="19.5" r=".6" fill="currentColor"/></symbol>
+    <symbol id="icon-key" viewBox="0 0 48 48" fill="none"><circle cx="17" cy="19" r="10.5" stroke="currentColor" stroke-width="1.4"/><circle cx="17" cy="19" r="4" stroke="currentColor" stroke-width="1" opacity=".2"/><circle cx="17" cy="19" r="1.2" fill="currentColor" opacity=".3"/><path d="M27.5 19H42" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M35 19v6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M39 19v4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M43 19v5.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="icon-void-doc" viewBox="0 0 48 48" fill="none"><path d="M11 7h18l9 9v26a3 3 0 01-3 3H11a3 3 0 01-3-3V10a3 3 0 013-3z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M29 7v9h9" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><line x1="15" y1="22" x2="27" y2="22" stroke="currentColor" stroke-width="1" opacity=".25" stroke-linecap="round"/><line x1="15" y1="27" x2="31" y2="27" stroke="currentColor" stroke-width="1" opacity=".25" stroke-linecap="round"/><line x1="15" y1="32" x2="25" y2="32" stroke="currentColor" stroke-width="1" opacity=".25" stroke-linecap="round"/><circle cx="35" cy="35" r="8.5" stroke="currentColor" stroke-width="1.6" transform="rotate(-12 35 35)" opacity=".7"/><line x1="28.5" y1="41" x2="41.5" y2="28.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity=".7"/></symbol>
+    <symbol id="icon-divide-house" viewBox="0 0 48 48" fill="none"><path d="M24 5L3 22.5h5v19.5h12V30h8v12h12V22.5h5L24 5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><line x1="24" y1="10" x2="24" y2="42" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 2.5" opacity=".45"/><path d="M20 38h-2v-6h2" stroke="currentColor" stroke-width="1" opacity=".2" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 38h-2v-6h2" stroke="currentColor" stroke-width="1" opacity=".2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-shield-check" viewBox="0 0 48 48" fill="none"><path d="M24 4L5 13v13c0 11 8.5 17.5 19 22 10.5-4.5 19-11 19-22V13L24 4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M24 4L5 13v13c0 11 8.5 17.5 19 22 10.5-4.5 19-11 19-22V13L24 4z" fill="currentColor" opacity=".04"/><path d="M16 25l5.5 5.5L33 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-target" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.3"/><circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="1" opacity=".35"/><circle cx="12" cy="12" r="2.5" fill="currentColor" opacity=".15" stroke="currentColor" stroke-width="1"/><circle cx="12" cy="12" r=".8" fill="currentColor" opacity=".5"/></symbol>
+    <symbol id="icon-courthouse" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 8v1h20V8L12 2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><line x1="5" y1="9" x2="5" y2="20" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="9.5" y1="9" x2="9.5" y2="20" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="14.5" y1="9" x2="14.5" y2="20" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="19" y1="9" x2="19" y2="20" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="2" y1="20" x2="22" y2="20" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+    <symbol id="icon-fixed-price" viewBox="0 0 24 24" fill="none"><path d="M14 2l-1 1H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V8l-1-1" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M13 2v6h6" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><rect x="8" y="13" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M12 15v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="12" cy="14.2" r=".7" fill="currentColor" opacity=".5"/><path d="M10.5 14.2h3" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity=".4"/></symbol>
+    <symbol id="icon-curator" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="7" r="3.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 21c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M16 13l2 2-2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity=".4"/><path d="M8 13l-2 2 2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity=".4"/></symbol>
+    <symbol id="icon-key-sm" viewBox="0 0 32 32" fill="none"><circle cx="12" cy="13" r="7" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="13" r="2.5" stroke="currentColor" stroke-width="1" opacity=".2"/><circle cx="12" cy="13" r=".8" fill="currentColor" opacity=".3"/><path d="M19 13H28" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M24 13v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M27 13v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+</svg>
+
+<!-- NAV -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <a href="#" class="flex items-center gap-2.5"><div class="w-2.5 h-2.5 bg-coral-500 rotate-45 rounded-sm"></div><span class="font-serif text-lg tracking-wide text-ink-900 font-medium">ЯПомогаю<span class="text-coral-500">.РФ</span></span></a>
+        <div class="hidden md:flex items-center gap-10">
+            <a href="#services" class="nav-link text-sm font-medium text-ink-600 hover:text-ink-900 transition-colors">Услуги</a>
+            <a href="#process" class="nav-link text-sm font-medium text-ink-600 hover:text-ink-900 transition-colors">Процесс</a>
+            <a href="#about" class="nav-link text-sm font-medium text-ink-600 hover:text-ink-900 transition-colors">О нас</a>
+            <a href="#reviews" class="nav-link text-sm font-medium text-ink-600 hover:text-ink-900 transition-colors">Отзывы</a>
+            <a href="#faq" class="nav-link text-sm font-medium text-ink-600 hover:text-ink-900 transition-colors">FAQ</a>
+        </div>
+        <div class="hidden md:block"><a href="#cta" class="btn-coral px-6 py-2.5 rounded-xl text-sm"><span>Консультация</span></a></div>
+        <button id="menuBtn" class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5"><span class="w-5 h-px bg-ink-900 transition-all duration-300" id="menuLine1"></span><span class="w-5 h-px bg-ink-900 transition-all duration-300" id="menuLine2"></span></button>
+    </div>
+</nav>
+<div id="mobileMenu" class="fixed inset-0 z-40 bg-cream-50/98 backdrop-blur-xl flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-500 ease-out">
+    <a href="#services" class="mobile-link font-serif text-2xl text-ink-700 hover:text-coral-500 transition-colors">Услуги</a>
+    <a href="#process" class="mobile-link font-serif text-2xl text-ink-700 hover:text-coral-500 transition-colors">Процесс</a>
+    <a href="#about" class="mobile-link font-serif text-2xl text-ink-700 hover:text-coral-500 transition-colors">О нас</a>
+    <a href="#reviews" class="mobile-link font-serif text-2xl text-ink-700 hover:text-coral-500 transition-colors">Отзывы</a>
+    <a href="#faq" class="mobile-link font-serif text-2xl text-ink-700 hover:text-coral-500 transition-colors">FAQ</a>
+    <div class="mt-4"><a href="#cta" class="mobile-link btn-coral px-8 py-3 rounded-xl text-base"><span>Консультация</span></a></div>
+</div>
+
+<!-- ========== HERO — INTERACTIVE TREE ========== -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <!-- Interactive glow orbs -->
+    <div id="glowA" class="glow-orb w-[420px] h-[350px] bg-coral-200/20" style="top:10%;right:5%;transform:translate(0,0)"></div>
+    <div id="glowB" class="glow-orb w-[350px] h-[300px] bg-mint-200/15" style="bottom:15%;left:5%;transform:translate(0,0)"></div>
+
+    <!-- Interactive SVG tree -->
+    <div class="hero-tree-wrap absolute inset-0 flex items-center justify-center opacity-[.25] pointer-events-none transition-opacity duration-700" style="transform:scale(1)">
+        <svg id="heroSvg" viewBox="0 0 600 520" class="w-full max-w-3xl h-auto" fill="none" style="pointer-events:auto">
+            <g id="edgesGroup"></g>
+            <g id="ripplesGroup"></g>
+            <g id="nodesGroup"></g>
+        </svg>
+    </div>
+
+    <!-- Text -->
+    <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+        <p class="text-xs font-semibold tracking-[.3em] uppercase text-coral-500/70 mb-8 hero-fade" style="animation-delay:.1s">Юридическая практика</p>
+        <h1 class="font-serif text-6xl md:text-8xl lg:text-[8.4rem] font-bold text-ink-900 leading-[.95] tracking-tight mb-6 hero-fade" style="animation-delay:.25s">Наследство</h1>
+        <p class="font-serif italic text-xl md:text-2xl lg:text-3xl text-ink-600/70 font-normal mb-4 hero-fade" style="animation-delay:.45s">это право, а не надежда</p>
+        <p class="text-sm md:text-base font-light text-ink-500/70 max-w-md mx-auto mb-14 leading-relaxed hero-fade" style="animation-delay:.6s">Юридическое сопровождение наследственных дел по всей России</p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 hero-fade" style="animation-delay:.75s">
+            <a href="#cta" class="btn-coral px-8 py-4 rounded-2xl text-sm tracking-wide"><span>Бесплатная консультация</span></a>
+            <a href="#process" class="btn-outline px-8 py-4 rounded-2xl text-sm tracking-wide">Как мы работаем</a>
+        </div>
+        <p class="text-xs text-ink-400 mt-8 hero-fade" style="animation-delay:.9s">Ответим за 15 минут</p>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-25 hero-fade" style="animation-delay:1.2s">
+        <div class="w-5 h-8 rounded-full border border-ink-400/40 flex justify-center pt-1.5"><div class="w-0.5 h-2 bg-ink-400/50 rounded-full animate-bounce"></div></div>
+    </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="relative py-28 md:py-36 soft-line overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-3xl mx-auto text-center mb-16 reveal">
+            <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-coral-50 border border-coral-200/40 mb-8"><svg class="w-4 h-4 text-coral-500" viewBox="0 0 16 16" fill="none"><path d="M8 1L1.5 5v1h13V5L8 1z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><line x1="3" y1="6.5" x2="3" y2="13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="6.5" y1="6.5" x2="6.5" y2="13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="9.5" y1="6.5" x2="9.5" y2="13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="13" y1="6.5" x2="13" y2="13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="1" y1="13" x2="15" y2="13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span class="text-xs font-semibold text-coral-600 tracking-wide">Проблема</span></div>
+            <h2 class="font-serif text-3xl md:text-5xl text-ink-900 tracking-tight mb-6">Каждый третий наследник<br class="hidden md:block"> в России теряет свои права</h2>
+            <p class="text-sm md:text-base font-light text-ink-500 leading-relaxed max-w-xl mx-auto">Из-за незнания сроков, ошибок в документах или противодействия других наследников.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div class="bg-white rounded-2xl p-8 border border-ink-300/6 reveal reveal-delay-1"><div class="flex items-center gap-3 mb-6"><div class="icon-badge bg-coral-50"><svg class="w-5 h-5 text-coral-500"><use href="#icon-clock-urgency"/></svg></div><p class="font-serif text-4xl md:text-5xl text-coral-500 font-semibold leading-none">68<span class="text-2xl md:text-3xl">%</span></p></div><p class="text-sm font-medium text-ink-900 mb-2">Не знают о сроке</p><p class="text-xs font-light text-ink-500 leading-relaxed mb-6">Не подозревают о шестимесячном сроке принятия наследства</p><div class="problem-bar"><div class="problem-bar-fill bg-gradient-to-r from-coral-400 to-coral-500" data-width="68%" style="max-width:68%"></div></div></div>
+            <div class="bg-white rounded-2xl p-8 border border-ink-300/6 reveal reveal-delay-2"><div class="flex items-center gap-3 mb-6"><div class="icon-badge bg-mint-50"><svg class="w-5 h-5 text-mint-500"><use href="#icon-conflict"/></svg></div><p class="font-serif text-4xl md:text-5xl text-mint-400 font-semibold leading-none">42<span class="text-2xl md:text-3xl">%</span></p></div><p class="text-sm font-medium text-ink-900 mb-2">Противодействие</p><p class="text-xs font-light text-ink-500 leading-relaxed mb-6">Сталкиваются с противодействием других наследников</p><div class="problem-bar"><div class="problem-bar-fill bg-gradient-to-r from-mint-300 to-mint-400" data-width="42%" style="max-width:42%"></div></div></div>
+            <div class="bg-white rounded-2xl p-8 border border-ink-300/6 reveal reveal-delay-3"><div class="flex items-center gap-3 mb-6"><div class="icon-badge bg-coral-50"><svg class="w-5 h-5 text-coral-500"><use href="#icon-error-doc"/></svg></div><p class="font-serif text-4xl md:text-5xl text-coral-500 font-semibold leading-none">31<span class="text-2xl md:text-3xl">%</span></p></div><p class="text-sm font-medium text-ink-900 mb-2">Ошибки в документах</p><p class="text-xs font-light text-ink-500 leading-relaxed mb-6">Теряют имущество из-за ошибок в оформлении</p><div class="problem-bar"><div class="problem-bar-fill bg-gradient-to-r from-coral-400 to-coral-500" data-width="31%" style="max-width:31%"></div></div></div>
+        </div>
+        <div class="max-w-5xl mx-auto mt-8 reveal reveal-delay-4"><div class="flex items-center justify-center gap-3 py-5 px-6 rounded-2xl bg-coral-50/50 border border-coral-200/20"><svg class="w-5 h-5 text-coral-500/70 flex-shrink-0" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16 8 8 0 000-16z" stroke="currentColor" stroke-width="1.2"/><path d="M10 6v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="10" cy="13.5" r=".8" fill="currentColor"/></svg><p class="text-sm text-ink-700 font-light"><span class="font-medium text-ink-900">Итого:</span> более трети наследственных дел в России заканчиваются потерей имущества</p></div></div>
+    </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="relative py-28 md:py-36 soft-line overflow-hidden bg-white/50">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-2xl mb-20"><p class="text-xs font-semibold tracking-[.2em] uppercase text-coral-500 mb-4 reveal">Услуги</p><h2 class="font-serif text-3xl md:text-5xl text-ink-900 tracking-tight mb-6 reveal reveal-delay-1">Полный спектр<br>наследственных дел</h2><p class="text-sm font-light text-ink-500 leading-relaxed reveal reveal-delay-2">Каждая ситуация уникальна. Мы подготовили решения для всех сценариев.</p></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="service-card p-8 md:p-10 reveal"><div class="flex items-start justify-between mb-8"><span class="font-serif text-5xl text-coral-500/8 font-bold">01</span><div class="icon-badge bg-coral-50/80"><svg class="w-7 h-7 text-coral-500"><use href="#icon-key"/></svg></div></div><h3 class="font-serif text-xl md:text-2xl text-ink-900 mb-4 font-medium">Вступление в наследство</h3><p class="text-sm font-light text-ink-500 leading-relaxed mb-8">Оформление наследственных прав у нотариуса, восстановление пропущенного срока, установление факта принятия наследства через суд.</p><div class="img-placeholder h-40 rounded-2xl"><img src="https://picsum.photos/seed/inherit-docs-light/800/400.jpg" alt="Документы" loading="lazy"></div></div>
+            <div class="service-card p-8 md:p-10 reveal reveal-delay-1"><div class="flex items-start justify-between mb-8"><span class="font-serif text-5xl text-mint-400/8 font-bold">02</span><div class="icon-badge bg-mint-50/80"><svg class="w-7 h-7 text-mint-500"><use href="#icon-void-doc"/></svg></div></div><h3 class="font-serif text-xl md:text-2xl text-ink-900 mb-4 font-medium">Оспаривание завещания</h3><p class="text-sm font-light text-ink-500 leading-relaxed mb-8">Признание завещания недействительным, оспаривание по основаниям недееспособности завещателя, принуждения или подделки.</p><div class="img-placeholder h-40 rounded-2xl"><img src="https://picsum.photos/seed/court-light/800/400.jpg" alt="Суд" loading="lazy"></div></div>
+            <div class="service-card p-8 md:p-10 reveal"><div class="flex items-start justify-between mb-8"><span class="font-serif text-5xl text-mint-400/8 font-bold">03</span><div class="icon-badge bg-mint-50/80"><svg class="w-7 h-7 text-mint-500"><use href="#icon-divide-house"/></svg></div></div><h3 class="font-serif text-xl md:text-2xl text-ink-900 mb-4 font-medium">Раздел наследственного имущества</h3><p class="text-sm font-light text-ink-500 leading-relaxed mb-8">Определение долей, выдел супружеской доли, раздел недвижимости, банковских счетов и бизнеса.</p><div class="img-placeholder h-40 rounded-2xl"><img src="https://picsum.photos/seed/property-division-light/800/400.jpg" alt="Недвижимость" loading="lazy"></div></div>
+            <div class="service-card p-8 md:p-10 reveal reveal-delay-1"><div class="flex items-start justify-between mb-8"><span class="font-serif text-5xl text-coral-500/8 font-bold">04</span><div class="icon-badge bg-coral-50/80"><svg class="w-7 h-7 text-coral-500"><use href="#icon-shield-check"/></svg></div></div><h3 class="font-serif text-xl md:text-2xl text-ink-900 mb-4 font-medium">Защита наследственных прав</h3><p class="text-sm font-light text-ink-500 leading-relaxed mb-8">Защита от посягательств третьих лиц, взыскание неосновательного обогащения, устранение недостойных наследников.</p><div class="img-placeholder h-40 rounded-2xl"><img src="https://picsum.photos/seed/legal-shield-light/800/400.jpg" alt="Защита" loading="lazy"></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="relative py-28 md:py-36 soft-line overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-28">
+            <div><p class="text-xs font-semibold tracking-[.2em] uppercase text-coral-500 mb-4 reveal">Процесс</p><h2 class="font-serif text-3xl md:text-5xl text-ink-900 tracking-tight mb-6 reveal reveal-delay-1">От первой встречи<br>до результата</h2><p class="text-sm font-light text-ink-500 leading-relaxed mb-10 reveal reveal-delay-2">Прозрачный и понятный процесс.</p><div class="img-placeholder h-64 md:h-80 rounded-2xl reveal reveal-delay-3"><img src="https://picsum.photos/seed/handshake-bright/800/600.jpg" alt="Консультация" loading="lazy"></div></div>
+            <div class="relative">
+                <div class="absolute left-[23px] top-6 bottom-6 w-px bg-gradient-to-b from-coral-300/40 via-coral-200/20 to-transparent"></div>
+                <div class="flex gap-6 mb-12 reveal"><div class="timeline-dot active"><span class="dot-num text-xs font-semibold text-ink-400 transition-colors">01</span></div><div class="pt-2"><h3 class="font-serif text-lg text-ink-900 mb-2 font-medium">Первичная консультация</h3><p class="text-sm font-light text-ink-500 leading-relaxed">Бесплатно анализируем ситуацию и формируем стратегию.</p></div></div>
+                <div class="flex gap-6 mb-12 reveal reveal-delay-1"><div class="timeline-dot"><span class="dot-num text-xs font-semibold text-ink-400 transition-colors">02</span></div><div class="pt-2"><h3 class="font-serif text-lg text-ink-900 mb-2 font-medium">Глубокий анализ</h3><p class="text-sm font-light text-ink-500 leading-relaxed">Изучаем документы, выявляем всех наследников и имущество.</p></div></div>
+                <div class="flex gap-6 mb-12 reveal reveal-delay-2"><div class="timeline-dot"><span class="dot-num text-xs font-semibold text-ink-400 transition-colors">03</span></div><div class="pt-2"><h3 class="font-serif text-lg text-ink-900 mb-2 font-medium">Подготовка документов</h3><p class="text-sm font-light text-ink-500 leading-relaxed">Формируем полный пакет для нотариуса или суда.</p></div></div>
+                <div class="flex gap-6 mb-12 reveal reveal-delay-3"><div class="timeline-dot"><span class="dot-num text-xs font-semibold text-ink-400 transition-colors">04</span></div><div class="pt-2"><h3 class="font-serif text-lg text-ink-900 mb-2 font-medium">Судебное представительство</h3><p class="text-sm font-light text-ink-500 leading-relaxed">От первой инстанции до кассации.</p></div></div>
+                <div class="flex gap-6 reveal reveal-delay-4"><div class="timeline-dot"><span class="dot-num text-xs font-semibold text-ink-400 transition-colors">05</span></div><div class="pt-2"><h3 class="font-serif text-lg text-ink-900 mb-2 font-medium">Получение результата</h3><p class="text-sm font-light text-ink-500 leading-relaxed">Оформляем право собственности, передаём документы.</p></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="relative py-28 md:py-36 soft-line overflow-hidden bg-white/50">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-20"><p class="text-xs font-semibold tracking-[.2em] uppercase text-coral-500 mb-4 reveal">Почему мы</p><h2 class="font-serif text-3xl md:text-5xl text-ink-900 tracking-tight reveal reveal-delay-1">Специализация, а не универсальность</h2></div>
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-start">
+            <div class="lg:col-span-2 reveal"><div class="img-placeholder aspect-[3/4] rounded-2xl sticky top-28"><img src="https://picsum.photos/seed/lawyer-portrait-warm/600/800.jpg" alt="Юрист" loading="lazy"></div></div>
+            <div class="lg:col-span-3">
+                <div class="feature-row py-8 flex gap-6 items-start reveal"><div class="icon-badge bg-coral-50"><svg class="w-5 h-5 text-coral-500"><use href="#icon-target"/></svg></div><div><h3 class="font-serif text-lg text-ink-900 mb-2 font-medium">15+ лет только наследственных дел</h3><p class="text-sm font-light text-ink-500 leading-relaxed">Наследство — единственный фокус.</p></div></div>
+                <div class="feature-row py-8 flex gap-6 items-start reveal reveal-delay-1"><div class="icon-badge bg-mint-50"><svg class="w-5 h-5 text-mint-500"><use href="#icon-courthouse"/></svg></div><div><h3 class="font-serif text-lg text-ink-900 mb-2 font-medium">Собственная судебная практика</h3><p class="text-sm font-light text-ink-500 leading-relaxed">Суды всех инстанций по всей РФ.</p></div></div>
+                <div class="feature-row py-8 flex gap-6 items-start reveal reveal-delay-2"><div class="icon-badge bg-coral-50"><svg class="w-5 h-5 text-coral-500"><use href="#icon-fixed-price"/></svg></div><div><h3 class="font-serif text-lg text-ink-900 mb-2 font-medium">Фиксированная стоимость</h3><p class="text-sm font-light text-ink-500 leading-relaxed">Никаких скрытых платежей.</p></div></div>
+                <div class="py-8 flex gap-6 items-start reveal reveal-delay-3"><div class="icon-badge bg-mint-50"><svg class="w-5 h-5 text-mint-500"><use href="#icon-curator"/></svg></div><div><h3 class="font-serif text-lg text-ink-900 mb-2 font-medium">Личный куратор на всё время дела</h3><p class="text-sm font-light text-ink-500 leading-relaxed">Без передачи между отделами.</p></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATS -->
+<section class="relative py-24 md:py-32 soft-line overflow-hidden bg-ink-900">
+    <div class="absolute inset-0 bg-gradient-to-br from-coral-600/10 via-transparent to-mint-600/10"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6">
+            <div class="text-center reveal"><p class="stat-number font-serif text-4xl md:text-6xl text-coral-400 mb-2" data-target="15" data-suffix="+">0</p><p class="text-xs font-light text-ink-400 tracking-wide">лет практики</p></div>
+            <div class="text-center reveal reveal-delay-1"><p class="stat-number font-serif text-4xl md:text-6xl text-mint-300 mb-2" data-target="2000" data-suffix="+">0</p><p class="text-xs font-light text-ink-400 tracking-wide">завершённых дел</p></div>
+            <div class="text-center reveal reveal-delay-2"><p class="stat-number font-serif text-4xl md:text-6xl text-coral-400 mb-2" data-target="97" data-suffix="%">0</p><p class="text-xs font-light text-ink-400 tracking-wide">выигранных дел</p></div>
+            <div class="text-center reveal reveal-delay-3"><p class="stat-number font-serif text-4xl md:text-6xl text-mint-300 mb-2" data-target="48" data-suffix=" ч">0</p><p class="text-xs font-light text-ink-400 tracking-wide">старт работы</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="relative py-28 md:py-36 soft-line overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-20"><p class="text-xs font-semibold tracking-[.2em] uppercase text-coral-500 mb-4 reveal">Отзывы</p><h2 class="font-serif text-3xl md:text-5xl text-ink-900 tracking-tight reveal reveal-delay-1">Истории наших клиентов</h2></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="review-card p-8 reveal"><span class="font-serif text-6xl text-coral-500/10 leading-none block mb-4">"</span><p class="text-sm font-light text-ink-600 leading-relaxed mb-8">После смерти отца выяснилось, что его гражданская жена подала заявление на наследство. Спасибо «ЯПомогаю.РФ» — суд признал её недостойной наследницей.</p><div class="flex items-center gap-4"><div class="img-placeholder w-10 h-10 rounded-full flex-shrink-0"><img src="https://picsum.photos/seed/client-anna-warm/100/100.jpg" alt="А.М." loading="lazy"></div><div><p class="text-sm text-ink-900 font-medium">Анна М.</p><p class="text-xs text-ink-400">Москва</p></div></div></div>
+            <div class="review-card p-8 reveal reveal-delay-1"><span class="font-serif text-6xl text-mint-400/10 leading-none block mb-4">"</span><p class="text-sm font-light text-ink-600 leading-relaxed mb-8">Пропустил срок на 8 месяцев. Юристы восстановили срок через суд и оформили дачу и участок.</p><div class="flex items-center gap-4"><div class="img-placeholder w-10 h-10 rounded-full flex-shrink-0"><img src="https://picsum.photos/seed/client-dmitry-warm/100/100.jpg" alt="Д.К." loading="lazy"></div><div><p class="text-sm text-ink-900 font-medium">Дмитрий К.</p><p class="text-xs text-ink-400">Санкт-Петербург</p></div></div></div>
+            <div class="review-card p-8 reveal reveal-delay-2"><span class="font-serif text-6xl text-coral-500/10 leading-none block mb-4">"</span><p class="text-sm font-light text-ink-600 leading-relaxed mb-8">Брат пытался оспорить завещание матери. Защитили волю мамы и сохранили мне квартиру.</p><div class="flex items-center gap-4"><div class="img-placeholder w-10 h-10 rounded-full flex-shrink-0"><img src="https://picsum.photos/seed/client-elena-warm/100/100.jpg" alt="Е.С." loading="lazy"></div><div><p class="text-sm text-ink-900 font-medium">Елена С.</p><p class="text-xs text-ink-400">Екатеринбург</p></div></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="relative py-28 md:py-36 soft-line overflow-hidden bg-white/50">
+    <div class="max-w-3xl mx-auto px-6">
+        <div class="text-center mb-16"><p class="text-xs font-semibold tracking-[.2em] uppercase text-coral-500 mb-4 reveal">Вопросы</p><h2 class="font-serif text-3xl md:text-5xl text-ink-900 tracking-tight reveal reveal-delay-1">Частые вопросы</h2></div>
+        <div class="reveal reveal-delay-2">
+            <div class="faq-item py-6"><button class="faq-toggle w-full flex items-center justify-between text-left gap-4"><span class="font-serif text-lg text-ink-900 font-medium">В течение какого срока нужно принять наследство?</span><span class="faq-icon text-coral-500 text-xl flex-shrink-0 font-light">+</span></button><div class="faq-answer"><p class="text-sm font-light text-ink-500 leading-relaxed pt-4 pb-2">Общий срок — 6 месяцев со дня открытия наследства. Можно восстановить через суд.</p></div></div>
+            <div class="faq-item py-6"><button class="faq-toggle w-full flex items-center justify-between text-left gap-4"><span class="font-serif text-lg text-ink-900 font-medium">Можно ли оспорить завещание?</span><span class="faq-icon text-coral-500 text-xl flex-shrink-0 font-light">+</span></button><div class="faq-answer"><p class="text-sm font-light text-ink-500 leading-relaxed pt-4 pb-2">Да — при недееспособности, принуждении или нарушениях оформления.</p></div></div>
+            <div class="faq-item py-6"><button class="faq-toggle w-full flex items-center justify-between text-left gap-4"><span class="font-serif text-lg text-ink-900 font-medium">Что делать, если другие наследники не дают согласие?</span><span class="faq-icon text-coral-500 text-xl flex-shrink-0 font-light">+</span></button><div class="faq-answer"><p class="text-sm font-light text-ink-500 leading-relaxed pt-4 pb-2">Защищаем ваши интересы в суде — выделяем долю, оспариваем действия недобросовестных наследников.</p></div></div>
+            <div class="faq-item py-6"><button class="faq-toggle w-full flex items-center justify-between text-left gap-4"><span class="font-serif text-lg text-ink-900 font-medium">Сколько стоит вступление в наследство?</span><span class="faq-icon text-coral-500 text-xl flex-shrink-0 font-light">+</span></button><div class="faq-answer"><p class="text-sm font-light text-ink-500 leading-relaxed pt-4 pb-2">Фиксированная цена на первой консультации. Госпошлина — 0,3% для близких родственников.</p></div></div>
+            <div class="faq-item py-6"><button class="faq-toggle w-full flex items-center justify-between text-left gap-4"><span class="font-serif text-lg text-ink-900 font-medium">Работаете ли вы в других регионах?</span><span class="faq-icon text-coral-500 text-xl flex-shrink-0 font-light">+</span></button><div class="faq-answer"><p class="text-sm font-light text-ink-500 leading-relaxed pt-4 pb-2">Да, по всей России. Дистанционный документооборот через Госуслуги.</p></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section id="cta" class="relative py-32 md:py-44 soft-line overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-coral-50/80 via-cream-50 to-mint-50/60"></div>
+    <div class="glow-orb w-[500px] h-[400px] bg-coral-200/25 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="position:absolute"></div>
+    <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
+        <div class="reveal"><div class="w-16 h-16 rounded-2xl bg-coral-500/10 flex items-center justify-center mx-auto mb-8"><svg class="w-8 h-8 text-coral-500"><use href="#icon-key-sm"/></svg></div></div>
+        <h2 class="font-serif text-3xl md:text-5xl lg:text-6xl text-ink-900 tracking-tight mb-6 reveal reveal-delay-1">Готовы защитить<br>своё наследство?</h2>
+        <p class="text-sm md:text-base font-light text-ink-500 max-w-xl mx-auto mb-12 reveal reveal-delay-2">Первая консультация — бесплатно.</p>
+        <div class="max-w-md mx-auto mb-8 reveal reveal-delay-3">
+            <form id="ctaForm" class="flex flex-col sm:flex-row gap-3">
+                <input type="tel" placeholder="+7 (___) ___-__-__" class="flex-1 bg-white border border-ink-300/20 rounded-2xl px-5 py-4 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-coral-400 focus:ring-2 focus:ring-coral-100 transition-all font-light shadow-sm">
+                <button type="submit" class="btn-coral px-8 py-4 rounded-2xl text-sm tracking-wide whitespace-nowrap"><span>Позвоните мне</span></button>
+            </form>
+            <div id="formMessage" class="mt-4 text-sm hidden"></div>
+        </div>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10 reveal reveal-delay-4">
+            <a href="tel:+78001234567" class="btn-outline px-8 py-4 rounded-2xl text-sm tracking-wide flex items-center gap-2"><svg class="w-4 h-4" viewBox="0 0 16 16" fill="none"><path d="M3.5 2.5h3l1.2 3.5-1.5 1a7.5 7.5 0 003.3 3.3l1-1.5 3.5 1.2v3a1 1 0 01-1 1C6 14 2 10 2 3.5a1 1 0 011-1z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>8 800 123-45-67</a>
+            <a href="https://t.me/" target="_blank" class="btn-outline px-8 py-4 rounded-2xl text-sm tracking-wide flex items-center gap-2"><svg class="w-4 h-4" viewBox="0 0 16 16" fill="none"><path d="M14 2L7 9M14 2l-3 12-4-5-5-1L14 2z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Telegram</a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="relative py-16 soft-line bg-ink-900 text-cream-100">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div class="md:col-span-2"><div class="flex items-center gap-2.5 mb-4"><div class="w-2.5 h-2.5 bg-coral-400 rotate-45 rounded-sm"></div><span class="font-serif text-lg tracking-wide text-cream-100 font-medium">ЯПомогаю<span class="text-coral-400">.РФ</span></span></div><p class="text-sm font-light text-ink-400 leading-relaxed max-w-sm mb-6">Юридическая практика, специализирующаяся исключительно на наследственных делах. С 2009 года.</p><div class="img-placeholder h-32 rounded-xl max-w-xs !bg-ink-800 !border-ink-700/30"><img src="https://picsum.photos/seed/office-modern/500/200.jpg" alt="Офис" loading="lazy"></div></div>
+            <div><p class="text-xs font-semibold tracking-[.15em] uppercase text-ink-500 mb-6">Навигация</p><div class="space-y-3"><a href="#services" class="block text-sm font-light text-ink-400 hover:text-coral-400 transition-colors">Услуги</a><a href="#process" class="block text-sm font-light text-ink-400 hover:text-coral-400 transition-colors">Процесс</a><a href="#about" class="block text-sm font-light text-ink-400 hover:text-coral-400 transition-colors">О нас</a><a href="#reviews" class="block text-sm font-light text-ink-400 hover:text-coral-400 transition-colors">Отзывы</a><a href="#faq" class="block text-sm font-light text-ink-400 hover:text-coral-400 transition-colors">FAQ</a></div></div>
+            <div><p class="text-xs font-semibold tracking-[.15em] uppercase text-ink-500 mb-6">Контакты</p><div class="space-y-3"><p class="text-sm font-light text-ink-400">8 800 123-45-67</p><p class="text-sm font-light text-ink-400">info@yapomogayu.ru</p><p class="text-sm font-light text-ink-400">Москва, ул. Тверская, 22</p><p class="text-sm font-light text-ink-400">Пн–Пт: 10:00–20:00</p></div></div>
+        </div>
+        <div class="border-t border-ink-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4"><p class="text-xs text-ink-600">© 2025 ЯПомогаю.РФ. Все права защищены.</p><div class="flex items-center gap-6"><a href="#" class="text-xs text-ink-600 hover:text-ink-400 transition-colors">Конфиденциальность</a><a href="#" class="text-xs text-ink-600 hover:text-ink-400 transition-colors">Соглашение</a></div></div>
+    </div>
+</footer>
+
+<button id="backToTop" class="fixed bottom-6 right-6 w-11 h-11 rounded-full border border-coral-300/30 bg-white/90 backdrop-blur-md flex items-center justify-center text-coral-500 hover:text-coral-600 hover:border-coral-400/50 hover:shadow-lg transition-all duration-300 opacity-0 translate-y-4 pointer-events-none z-50"><svg class="w-4 h-4" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M4 7l4-4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+<script>
+/* ========================================
+   INTERACTIVE HERO TREE
+   ======================================== */
+(function(){
+    const svg=document.getElementById('heroSvg');
+    const edgesG=document.getElementById('edgesGroup');
+    const nodesG=document.getElementById('nodesGroup');
+    const ripplesG=document.getElementById('ripplesGroup');
+    const glowA=document.getElementById('glowA');
+    const glowB=document.getElementById('glowB');
+    const NS='http://www.w3.org/2000/svg';
+
+    // Tree data
+    const nodes=[
+        {id:'a1',bx:195,by:100,r:5,or:10,baseOp:.15,color:'#E8734A'},
+        {id:'a2',bx:405,by:100,r:5,or:10,baseOp:.15,color:'#E8734A'},
+        {id:'p', bx:300,by:220,r:9,or:24,baseOp:.7,color:'#E8734A',center:true},
+        {id:'c1',bx:180,by:240,r:3.5,or:7,baseOp:.35,color:'#E8734A'},
+        {id:'c2',bx:620,by:250,r:3.5,or:7,baseOp:.35,color:'#E8734A'},
+        {id:'d1',bx:240,by:380,r:6,or:12,baseOp:.4,color:'#5B9A6F'},
+        {id:'d2',bx:300,by:400,r:6,or:12,baseOp:.4,color:'#5B9A6F'},
+        {id:'d3',bx:540,by:370,r:6,or:12,baseOp:.4,color:'#5B9A6F'},
+        {id:'g1',bx:150,by:465,r:3.5,or:7,baseOp:.15,color:'#5B9A6F'},
+        {id:'g2',bx:330,by:505,r:3.5,or:7,baseOp:.15,color:'#5B9A6F'},
+        {id:'g3',bx:475,by:500,r:3.5,or:7,baseOp:.15,color:'#5B9A6F'},
+        {id:'g4',bx:650,by:450,r:3.5,or:7,baseOp:.15,color:'#5B9A6F'},
+    ];
+    const edges=[
+        ['a1','p'],['a2','p'],['p','c1'],['p','c2'],
+        ['p','d1'],['p','d2'],['p','d3'],
+        ['d1','g1'],['d2','g2'],['d2','g3'],['d3','g4']
+    ];
+
+    // Create SVG elements once
+    const edgeEls=[],nodeEls=[];
+    edges.forEach(()=>{
+        const p=document.createElementNS(NS,'path');
+        p.setAttribute('fill','none');
+        p.setAttribute('stroke','#E8734A');
+        p.setAttribute('stroke-width','0.8');
+        p.setAttribute('stroke-linecap','round');
+        p.setAttribute('opacity','0.3');
+        edgesG.appendChild(p);
+        edgeEls.push(p);
+    });
+
+    nodes.forEach((n,i)=>{
+        const g=document.createElementNS(NS,'g');
+        // Hit area (invisible, larger)
+        const hit=document.createElementNS(NS,'circle');
+        hit.setAttribute('r',String(n.or+8));
+        hit.setAttribute('fill','transparent');
+        hit.setAttribute('class','node-hit');
+        g.appendChild(hit);
+        // Outer glow
+        const glow=document.createElementNS(NS,'circle');
+        glow.setAttribute('r',String(n.or));
+        glow.setAttribute('fill',n.color);
+        glow.setAttribute('opacity',String(n.baseOp*0.2));
+        g.appendChild(glow);
+        // Core
+        const core=document.createElementNS(NS,'circle');
+        core.setAttribute('r',String(n.r));
+        core.setAttribute('fill',n.color);
+        core.setAttribute('opacity',String(n.baseOp));
+        g.appendChild(core);
+        // Center white dot
+        if(n.center){
+            const dot=document.createElementNS(NS,'circle');
+            dot.setAttribute('r','3');
+            dot.setAttribute('fill','#fff');
+            dot.setAttribute('opacity','0.85');
+            g.appendChild(dot);
+        }
+        nodesG.appendChild(g);
+        nodeEls.push({g,hit,glow,core});
+        n.cx=n.bx;n.cy=n.by;n.hover=0;
+        // Hover events
+        hit.addEventListener('mouseenter',()=>{n.hover=1});
+        hit.addEventListener('mouseleave',()=>{n.hover=0});
+        // Click → ripple
+        hit.addEventListener('click',(e)=>{createRipple(n.cx,n.cy,n.color,e)});
+    });
+
+    // Ripple
+    function createRipple(x,y,color){
+        const c=document.createElementNS(NS,'circle');
+        c.setAttribute('cx',String(x));
+        c.setAttribute('cy',String(y));
+        c.setAttribute('r','4');
+        c.setAttribute('fill','none');
+        c.setAttribute('stroke',color);
+        c.setAttribute('stroke-width','1.2');
+        c.setAttribute('opacity','0.6');
+        ripplesG.appendChild(c);
+        let t=0;
+        (function anim(){
+            t+=0.03;
+            if(t>=1){ripplesG.removeChild(c);return}
+            c.setAttribute('r',String(4+t*40));
+            c.setAttribute('opacity',String(0.6*(1-t)));
+            c.setAttribute('stroke-width',String(1.2*(1-t*0.7)));
+            requestAnimationFrame(anim);
+        })();
+    }
+
+    // Mouse tracking
+    let mx=0.5,my=0.5,smx=0.5,smy=0.5;
+    let svgMouse={x:300,y:260}; // position in SVG coords
+
+    function onMove(cx,cy){
+        mx=cx/window.innerWidth;
+        my=cy/window.innerHeight;
+        // Convert to SVG coords
+        const rect=svg.getBoundingClientRect();
+        svgMouse.x=(cx-rect.left)/rect.width*600;
+        svgMouse.y=(cy-rect.top)/rect.height*520;
+    }
+    document.addEventListener('mousemove',e=>onMove(e.clientX,e.clientY));
+    document.addEventListener('touchmove',e=>{if(e.touches[0])onMove(e.touches[0].clientX,e.touches[0].clientY)},{passive:true});
+
+    function lerp(a,b,t){return a+(b-a)*t}
+
+    // Center of tree
+    const CX=300,CY=260;
+    const PARALLAX=16; // max px offset
+    const isMobile=window.innerWidth<768;
+    if(isMobile){svg.style.opacity='0.12'}
+
+    // Animate
+    let time=0;
+    function tick(){
+        time+=0.016;
+        smx=lerp(smx,mx,0.05);
+        smy=lerp(smy,my,0.05);
+
+        // Move glow orbs
+        const ox=(smx-0.5)*80;
+        const oy=(smy-0.5)*60;
+        glowA.style.transform=`translate(${ox}px,${oy}px)`;
+        glowB.style.transform=`translate(${-ox*0.7}px,${-oy*0.7}px)`;
+
+        // Update nodes
+        nodes.forEach((n,i)=>{
+            const dx=n.bx-CX;
+            const dy=n.by-CY;
+            const dist=Math.sqrt(dx*dx+dy*dy);
+            const maxDist=280;
+            const factor=Math.min(dist/maxDist,1);
+            const strength=isMobile?PARALLAX*0.3:PARALLAX;
+            const px=(smx-0.5)*strength*factor*(dx/Math.max(dist,1));
+            const py=(smy-0.5)*strength*factor*(dy/Math.max(dist,1));
+            n.cx=n.bx+px;
+            n.cy=n.by+py;
+
+            // Hover animation (smooth)
+            n.hover=lerp(n.hover, n.hover>0.5?1:0, 0.08);
+            const hScale=1+n.hover*0.5;
+            const hOpBoost=n.hover*0.4;
+
+            const el=nodeEls[i];
+            el.g.setAttribute('transform',`translate(${n.cx},${n.cy}) scale(${hScale})`);
+            el.hit.setAttribute('cx','0');el.hit.setAttribute('cy','0');
+            el.glow.setAttribute('cx','0');el.glow.setAttribute('cy','0');
+            el.core.setAttribute('cx','0');el.core.setAttribute('cy','0');
+            // Center pulse
+            if(n.center){
+                const pulse=0.12+Math.sin(time*1.5)*0.06;
+                el.glow.setAttribute('opacity',String(pulse+hOpBoost));
+                el.glow.setAttribute('r',String(n.or+Math.sin(time*1.5)*3));
+            }else{
+                el.glow.setAttribute('opacity',String(n.baseOp*0.2+hOpBoost*0.3));
+            }
+            el.core.setAttribute('opacity',String(n.baseOp+hOpBoost));
+        });
+
+        // Update edges
+        const nodeMap={};
+        nodes.forEach(n=>{nodeMap[n.id]=n});
+        edges.forEach((e,i)=>{
+            const n1=nodeMap[e[0]],n2=nodeMap[e[1]];
+            const mx2=(n1.cx+n2.cx)/2;
+            const my2=(n1.cy+n2.cy)/2+6; // slight curve
+            edgeEls[i].setAttribute('d',`M${n1.cx},${n1.cy} Q${mx2},${my2} ${n2.cx},${n2.cy}`);
+            // Brighten edge if either node is hovered
+            const hBoost=Math.max(n1.hover,n2.hover)*0.25;
+            edgeEls[i].setAttribute('opacity',String(0.3+hBoost));
+            edgeEls[i].setAttribute('stroke-width',String(0.8+n1.hover*0.6));
+        });
+
+        requestAnimationFrame(tick);
+    }
+    tick();
+})();
+
+/* ========================================
+   GENERAL SCRIPTS
+   ======================================== */
+const menuBtn=document.getElementById('menuBtn'),mobileMenu=document.getElementById('mobileMenu'),menuLine1=document.getElementById('menuLine1'),menuLine2=document.getElementById('menuLine2');let menuOpen=false;
+menuBtn.addEventListener('click',()=>{menuOpen=!menuOpen;if(menuOpen){mobileMenu.classList.remove('translate-x-full');mobileMenu.classList.add('translate-x-0');menuLine1.style.transform='rotate(45deg) translate(2px,2px)';menuLine2.style.transform='rotate(-45deg) translate(2px,-2px)';document.body.style.overflow='hidden'}else{mobileMenu.classList.add('translate-x-full');mobileMenu.classList.remove('translate-x-0');menuLine1.style.transform='';menuLine2.style.transform='';document.body.style.overflow=''}});
+document.querySelectorAll('.mobile-link').forEach(l=>{l.addEventListener('click',()=>{menuOpen=false;mobileMenu.classList.add('translate-x-full');mobileMenu.classList.remove('translate-x-0');menuLine1.style.transform='';menuLine2.style.transform='';document.body.style.overflow=''})});
+
+const revealObserver=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('revealed')})},{threshold:.06,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+const barObserver=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('animated')})},{threshold:.3});
+document.querySelectorAll('.problem-bar-fill').forEach(b=>barObserver.observe(b));
+
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{if(window.scrollY>60){navbar.style.background='rgba(255,251,245,.88)';navbar.style.backdropFilter='blur(16px)';navbar.style.borderBottom='1px solid rgba(45,41,38,.06)'}else{navbar.style.background='transparent';navbar.style.backdropFilter='none';navbar.style.borderBottom='1px solid transparent'}});
+
+let countersAnimated=false;
+const counterObserver=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting&&!countersAnimated){countersAnimated=true;document.querySelectorAll('.stat-number').forEach(s=>{const target=parseInt(s.dataset.target),suffix=s.dataset.suffix||'',dur=2000,start=performance.now();(function up(now){const p=Math.min((now-start)/dur,1),eased=1-Math.pow(1-p,3);s.textContent=Math.round(eased*target).toLocaleString('ru-RU')+suffix;if(p<1)requestAnimationFrame(up)})(start)})}})},{threshold:.3});
+document.querySelectorAll('.stat-number').forEach(el=>counterObserver.observe(el));
+
+document.querySelectorAll('.timeline-dot').forEach(d=>{new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('active')})},{threshold:.5}).observe(d)});
+
+document.querySelectorAll('.faq-toggle').forEach(btn=>{btn.addEventListener('click',()=>{const item=btn.closest('.faq-item'),wasOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!wasOpen)item.classList.add('open')})});
+
+document.getElementById('ctaForm').addEventListener('submit',function(e){e.preventDefault();const msg=document.getElementById('formMessage');msg.classList.remove('hidden');msg.className='mt-4 text-sm text-mint-500 font-medium';msg.textContent='✓ Заявка отправлена. Перезвоним в течение 15 минут.';this.querySelector('input').value='';setTimeout(()=>{msg.classList.add('hidden')},5000)});
+
+const btt=document.getElementById('backToTop');
+window.addEventListener('scroll',()=>{if(window.scrollY>600){btt.style.opacity='1';btt.style.transform='translateY(0)';btt.style.pointerEvents='auto'}else{btt.style.opacity='0';btt.style.transform='translateY(16px)';btt.style.pointerEvents='none'}});
+btt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+const phoneInput=document.querySelector('input[type="tel"]');
+if(phoneInput){phoneInput.addEventListener('input',function(){let v=this.value.replace(/\D/g,'');if(v.startsWith('7')||v.startsWith('8'))v=v.substring(1);let f='+7';if(v.length>0)f+=' ('+v.substring(0,3);if(v.length>=3)f+=') '+v.substring(3,6);if(v.length>=6)f+='-'+v.substring(6,8);if(v.length>=8)f+='-'+v.substring(8,10);this.value=f});phoneInput.addEventListener('focus',function(){if(!this.value)this.value='+7 '})}
+</script>
+</body>
+</html>
